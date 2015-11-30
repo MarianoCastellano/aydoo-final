@@ -13,6 +13,11 @@ hs_err_pid*
 /bin/
 /.classpath
 /.project
-.settings*
+.settings
 build/
 target/
+.classpath
+/.idea
+.project
+.idea
+aydoo-final.iml
