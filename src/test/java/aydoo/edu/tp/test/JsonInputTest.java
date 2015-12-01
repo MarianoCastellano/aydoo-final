@@ -14,9 +14,8 @@ import aydoo.edu.tp.parser.Parser;
 public class JsonInputTest {
 
 	@Test
-	public void parseShouldParserInputEntityToJson() {
-		String ln = System.getProperty("line.separator");
-		String expected = "{"+ln+"\"identificador\":\"XS-3344\","+ln+"\"descripción\":\"Conector interno XS\","+ln+"\"precio\":\"756,03\""+ln+"}";
+	public void parseShouldParserInputEntityToJson() {		
+		String expected = "{\"identificador\":\"XS-3344\",\"descripción\":\"Conector interno XS\",\"precio\":\"756,03\"}";
 		
 		List<InputFieldEntity> fields = new ArrayList<>();
 		fields.add(new InputFieldEntity("identificador", "XS-3344"));

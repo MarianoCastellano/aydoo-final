@@ -28,26 +28,20 @@ public class InputEntity {
 
 	@Override
 	public String toString() {
-		String ln = System.getProperty("line.separator");
 		StringBuilder builder = new StringBuilder();
-		builder.append("{");
-		builder.append(ln);
+		builder.append("{");		
 		for (InputFieldEntity inputFieldEntity : fields) {
 			String field = inputFieldEntity.toString();
 			builder.append(field);
-			builder.append(",");
-			builder.append(ln);
+			builder.append(",");			
 		}
-		removeLastCommaAndLineSeparator(builder);		
-		builder.append(ln);
+		removeLastCommaAndLineSeparator(builder);				
 		builder.append("}");		
 		return builder.toString();
 	}
 
 	private void removeLastCommaAndLineSeparator(StringBuilder builder) {
 		builder.deleteCharAt(builder.length() - 1);		
-		builder.deleteCharAt(builder.length() - 1);
-		builder.deleteCharAt(builder.length() - 1);
 	}
 
 }
