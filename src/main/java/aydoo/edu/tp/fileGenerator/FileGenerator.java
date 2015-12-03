@@ -15,13 +15,13 @@ public class FileGenerator {
 		this.entity = entity;
 	}
 	
-	public void export() throws IOException {
-		File file = new File(filename().concat(".json"));
+	public void exportJson() throws IOException {
+		File file = new File(filename().concat(".json"));				
 		FileWriter fileWriter = new FileWriter(file);
-		PrintWriter printWriter = new PrintWriter(fileWriter);
-
+		PrintWriter printWriter = new PrintWriter(fileWriter);				
 		printWriter.write(entity.toString());
 		printWriter.close();
+		fileWriter.close();
 		
 	}
 

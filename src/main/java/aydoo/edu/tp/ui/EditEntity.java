@@ -1,6 +1,12 @@
 package aydoo.edu.tp.ui;
 
-import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -8,16 +14,24 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class EditEntity {
+import aydoo.edu.tp.entity.InputEntity;
+import aydoo.edu.tp.entity.InputFieldEntity;
+import aydoo.edu.tp.fileGenerator.FileGenerator;
 
-	public EditEntity(String content) {
-		JFrame frame = new JFrame("Edit entity");
-		frame.setSize(200, 200);
+public class EditEntity implements ActionListener{
+	
+	private JButton buttonSave;
+	private JFrame frame = new JFrame("Edit entity");	
+	private Map<JLabel,JTextField> attributes = new LinkedHashMap<JLabel,JTextField>();	
+
+	public EditEntity(String content) {		
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 
@@ -25,8 +39,11 @@ public class EditEntity {
 		frame.add(box);
 
 		drawFields(content, box);
+		
+		frame.setSize(250, 50*attributes.size());
 
 		frame.setVisible(true);
+		frame.setResizable(false);
 	}
 
 	private void drawFields(String content, Box box) {
@@ -37,19 +54,54 @@ public class EditEntity {
 			JSONObject object = campos.getJSONObject(i);
 
 			String name = object.getString("nombre");
-
-			JPanel jPanel = new JPanel(new GridLayout());
-			JLabel nameLabel = new JLabel(name);
-			JTextField nameInput = new JTextField("", 15);
+			SpringLayout layout = new SpringLayout();
+			JLabel nameLabel = new JLabel(name);					
+			JPanel jPanel = new JPanel(layout);			
+			JTextField nameInput = new JTextField("", 10);
+			attributes.put(nameLabel,nameInput);			
 			jPanel.add(nameLabel);
 			jPanel.add(nameInput);
-
+			
+			layout.putConstraint(SpringLayout.WEST, nameLabel, 5, SpringLayout.WEST, jPanel);
+			layout.putConstraint(SpringLayout.NORTH, nameLabel, 3, SpringLayout.NORTH, jPanel);
+			layout.putConstraint(SpringLayout.WEST, nameInput, 100, SpringLayout.WEST, jPanel);
+			layout.putConstraint(SpringLayout.NORTH, nameInput, 3, SpringLayout.NORTH, jPanel);			
 			box.add(jPanel);
 		}
 
-		JButton button = new JButton("GUARDAR");
-		button.setHorizontalAlignment(SwingConstants.CENTER);
-		box.add(button);
+		buttonSave = new JButton("GUARDAR");
+		buttonSave.addActionListener(this);		
+		buttonSave.setHorizontalAlignment(SwingConstants.CENTER);
+		box.add(buttonSave);
+	}	
+	
+	private void save() {
+		FileGenerator generator = new FileGenerator(this.getEntity());
+		try {				
+			generator.exportJson();
+			frame.setVisible(false);
+			frame.dispose();
+		} catch (IOException error) {				
+			error.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event){		
+		if (event.getSource()==buttonSave){			
+			this.save();
+		}
+	}
+
+	private InputEntity getEntity() {		
+		List<InputFieldEntity> fields = new LinkedList<InputFieldEntity>();
+		for (JLabel attribute:attributes.keySet()){
+			InputFieldEntity input = new InputFieldEntity(attribute.getText(),attributes.get(attribute).getText()); 
+			fields.add(input);
+		}				
+		InputEntity entity = new InputEntity("alumno" , "definicion-alumno.json", fields);
+		return entity;
 	}
 
 }

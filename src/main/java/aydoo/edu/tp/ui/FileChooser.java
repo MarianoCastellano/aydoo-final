@@ -32,7 +32,7 @@ public class FileChooser extends JPanel implements ActionListener {
 	public FileChooser() {
 		super(new BorderLayout());
 
-		textArea = new JTextArea(5, 20);
+		textArea = new JTextArea(20, 50);
 		textArea.setMargin(new Insets(5, 5, 5, 5));
 		textArea.setEditable(false);
 		JScrollPane scrollPane = new JScrollPane(textArea);
@@ -78,7 +78,7 @@ public class FileChooser extends JPanel implements ActionListener {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 		JDialog.setDefaultLookAndFeelDecorated(true);
 
-		JFrame frame = new JFrame("AyDOO Final");
+		JFrame frame = new JFrame("AyDOO Final");		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JComponent newContentPane = new FileChooser();
