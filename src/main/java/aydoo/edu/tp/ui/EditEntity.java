@@ -28,12 +28,14 @@ import aydoo.edu.tp.fileGenerator.FileGenerator;
 
 public class EditEntity implements ActionListener{
 		
+	private String outputFileName;
 	private JButton buttonSave;
 	private JFrame frame = new JFrame("Edit entity");	
 	private Map<JLabel,JTextField> attributes = new LinkedHashMap<JLabel,JTextField>();	
 
-	public EditEntity(String content) {		
+	public EditEntity(String content, String fileDefinicionName) {		
 				
+		outputFileName = extractFileName(fileDefinicionName);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		
@@ -46,6 +48,11 @@ public class EditEntity implements ActionListener{
 
 		frame.setVisible(true);
 		frame.setResizable(false);
+	}
+
+	private String extractFileName(String fileDefinicionName) {
+		String fileName = fileDefinicionName.substring(11, fileDefinicionName.length()-5);
+		return fileName;
 	}
 
 	private void drawFields(String content, Box box) {
@@ -102,13 +109,6 @@ public class EditEntity implements ActionListener{
 		}
 		
 	}
-	
-	@Override
-	public void actionPerformed(ActionEvent event){		
-		if (event.getSource()==buttonSave){			
-			save();
-		}
-	}
 
 	private InputEntity getEntity() {		
 		List<InputFieldEntity> fields = new LinkedList<InputFieldEntity>();
@@ -116,8 +116,19 @@ public class EditEntity implements ActionListener{
 			InputFieldEntity input = new InputFieldEntity(attribute.getText(),attributes.get(attribute).getText()); 
 			fields.add(input);
 		}				
-		InputEntity entity = new InputEntity("alumno", "definicion-alumno.json", fields);
+		InputEntity entity = new InputEntity(outputFileName,"definicion-alumno.json", fields);
 		return entity;
+	}
+	
+	public String getOuputFileName(){
+		return this.outputFileName;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent event){		
+		if (event.getSource()==buttonSave){			
+			save();
+		}
 	}
 
 }

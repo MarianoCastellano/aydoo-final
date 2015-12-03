@@ -56,7 +56,7 @@ public class FileChooser extends JPanel implements ActionListener {
 				File file = fileChooser.getSelectedFile();
 				String content = readFile(file.getPath(), Charset.defaultCharset());
 
-				new EditEntity(content);
+				new EditEntity(content, file.getName());
 
 				textArea.append("Opening: " + file.getName() + "." + newline + content);
 			}

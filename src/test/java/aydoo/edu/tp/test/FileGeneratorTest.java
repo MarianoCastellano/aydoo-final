@@ -51,7 +51,6 @@ public class FileGeneratorTest {
 		String expected = "{\"nombre\":\"sebastian\",\"apellido\":\"roldan\"}";
 		
 		Assert.assertEquals(expected, linea);
-	}	
+	}
 
-	
 }
