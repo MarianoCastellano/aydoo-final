@@ -4,18 +4,15 @@ import aydoo.edu.tp.entity.InputEntity;
 
 public class JsonParser implements Parser {
 
-	private InputEntity inputEntity;
+    private InputEntity inputEntity;
 
-	public JsonParser(InputEntity inputEntity) {
-		this.inputEntity = inputEntity;
-	}
+    public JsonParser(InputEntity inputEntity) {
+        this.inputEntity = inputEntity;
+    }
 
-	@Override
-	public String parse() {
-		return getInputEntity().toString();
-	}
+    @Override
+    public String parse() {
+        return inputEntity.toJson();
+    }
 
-	public InputEntity getInputEntity() {
-		return inputEntity;
-	}
 }

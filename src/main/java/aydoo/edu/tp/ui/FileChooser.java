@@ -1,7 +1,7 @@
 package aydoo.edu.tp.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Insets;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -10,90 +10,80 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
-
 public class FileChooser extends JPanel implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	static private final String newline = "\n";
-	JButton openButton;
-	JTextArea textArea;
-	JFileChooser fileChooser;
-	JPanel panel;
+    private static final long serialVersionUID = 1L;
+    private static final String newline = "\n";
+    private JButton openButton;
+    private JTextArea textArea;
+    private JFileChooser fileChooser;
+    private JPanel panel;
 
-	public FileChooser() {
-		super(new BorderLayout());
+    public FileChooser() {
+        super(new BorderLayout());
 
-		textArea = new JTextArea(20, 50);
-		textArea.setMargin(new Insets(5, 5, 5, 5));
-		textArea.setEditable(false);
-		JScrollPane scrollPane = new JScrollPane(textArea);
+        textArea = new JTextArea(20, 50);
+        textArea.setMargin(new Insets(5, 5, 5, 5));
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
 
-		fileChooser = new JFileChooser();
+        fileChooser = new JFileChooser();
 
-		openButton = new JButton("Open a File...");
-		openButton.addActionListener(this);
+        openButton = new JButton("Open a File...");
+        openButton.addActionListener(this);
 
-		panel = new JPanel();
-		panel.add(openButton);
+        panel = new JPanel();
+        panel.add(openButton);
 
-		add(panel, BorderLayout.PAGE_START);
-		add(scrollPane, BorderLayout.CENTER);
-	}
+        add(panel, BorderLayout.PAGE_START);
+        add(scrollPane, BorderLayout.CENTER);
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == openButton) {
-			int returnVal = fileChooser.showOpenDialog(FileChooser.this);
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fileChooser.getSelectedFile();
-				String content = readFile(file.getPath(), Charset.defaultCharset());
+    private static void createAndShowGUI() {
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        JDialog.setDefaultLookAndFeelDecorated(true);
 
-				new EditEntity(content);
+        JFrame frame = new JFrame("AyDOO Final");
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-				textArea.append("Opening: " + file.getName() + "." + newline + content);
-			}
-			textArea.setCaretPosition(textArea.getDocument().getLength());
-		}
-	}
+        JComponent newContentPane = new FileChooser();
+        newContentPane.setOpaque(true);
+        frame.setContentPane(newContentPane);
 
-	private String readFile(String path, Charset encoding) {
-		byte[] encoded = new byte[0];
-		try {
-			encoded = Files.readAllBytes(Paths.get(path));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new String(encoded, encoding);
-	}
+        frame.pack();
+        frame.setVisible(true);
+    }
 
-	private static void createAndShowGUI() {
-		JFrame.setDefaultLookAndFeelDecorated(true);
-		JDialog.setDefaultLookAndFeelDecorated(true);
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
+    }
 
-		JFrame frame = new JFrame("AyDOO Final");		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == openButton) {
+            int returnVal = fileChooser.showOpenDialog(FileChooser.this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                String content = readFile(file.getPath(), Charset.defaultCharset());
 
-		JComponent newContentPane = new FileChooser();
-		newContentPane.setOpaque(true);
-		frame.setContentPane(newContentPane);
+                new EditEntity(content);
 
-		frame.pack();
-		frame.setVisible(true);
-	}
+                textArea.append("Opening: " + file.getName() + "." + newline + content);
+            }
+            textArea.setCaretPosition(textArea.getDocument().getLength());
+        }
+    }
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				createAndShowGUI();
-			}
-		});
-	}
+    private String readFile(String path, Charset encoding) {
+        byte[] encoded = new byte[0];
+        try {
+            encoded = Files.readAllBytes(Paths.get(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new String(encoded, encoding);
+    }
 }
