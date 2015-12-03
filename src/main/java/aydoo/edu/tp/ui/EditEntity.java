@@ -2,6 +2,8 @@ package aydoo.edu.tp.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -25,16 +27,16 @@ import aydoo.edu.tp.entity.InputFieldEntity;
 import aydoo.edu.tp.fileGenerator.FileGenerator;
 
 public class EditEntity implements ActionListener{
-	
+		
 	private JButton buttonSave;
 	private JFrame frame = new JFrame("Edit entity");	
 	private Map<JLabel,JTextField> attributes = new LinkedHashMap<JLabel,JTextField>();	
 
 	public EditEntity(String content) {		
-		
+				
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
-
+		
 		Box box = Box.createVerticalBox();
 		frame.add(box);
 
@@ -52,28 +54,42 @@ public class EditEntity implements ActionListener{
 
 		for (int i = 0; i < campos.length(); i++) {
 			JSONObject object = campos.getJSONObject(i);
-
-			String name = object.getString("nombre");
-			SpringLayout layout = new SpringLayout();
-			JLabel nameLabel = new JLabel(name);					
-			JPanel jPanel = new JPanel(layout);			
-			JTextField nameInput = new JTextField("", 10);
-			attributes.put(nameLabel,nameInput);			
-			jPanel.add(nameLabel);
-			jPanel.add(nameInput);
-			
-			layout.putConstraint(SpringLayout.WEST, nameLabel, 5, SpringLayout.WEST, jPanel);
-			layout.putConstraint(SpringLayout.NORTH, nameLabel, 3, SpringLayout.NORTH, jPanel);
-			layout.putConstraint(SpringLayout.WEST, nameInput, 100, SpringLayout.WEST, jPanel);
-			layout.putConstraint(SpringLayout.NORTH, nameInput, 3, SpringLayout.NORTH, jPanel);			
-			box.add(jPanel);
+			String name = object.getString("nombre");				
+			box.add(makeField(name));
 		}
 
 		buttonSave = new JButton("GUARDAR");
-		buttonSave.addActionListener(this);		
+		buttonSave.addActionListener(this);
+		buttonSave.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+            	if (e.getKeyCode()==10){
+            		save();
+            	}                
+             }
+          });
 		buttonSave.setHorizontalAlignment(SwingConstants.CENTER);
 		box.add(buttonSave);
 	}	
+	
+	private JPanel makeField(String name){
+				
+		SpringLayout layout = new SpringLayout();
+		JLabel nameLabel = new JLabel(name);					
+		JPanel jPanel = new JPanel(layout);			
+		JTextField nameInput = new JTextField("", 10);
+					
+		jPanel.add(nameLabel);
+		jPanel.add(nameInput);
+		
+		layout.putConstraint(SpringLayout.WEST, nameLabel, 5, SpringLayout.WEST, jPanel);
+		layout.putConstraint(SpringLayout.NORTH, nameLabel, 3, SpringLayout.NORTH, jPanel);
+		layout.putConstraint(SpringLayout.WEST, nameInput, 100, SpringLayout.WEST, jPanel);
+		layout.putConstraint(SpringLayout.NORTH, nameInput, 3, SpringLayout.NORTH, jPanel);
+		
+		attributes.put(nameLabel,nameInput);
+		
+		return jPanel;
+	}
 	
 	private void save() {
 		FileGenerator generator = new FileGenerator(this.getEntity());
@@ -90,7 +106,7 @@ public class EditEntity implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent event){		
 		if (event.getSource()==buttonSave){			
-			this.save();
+			save();
 		}
 	}
 
@@ -100,7 +116,7 @@ public class EditEntity implements ActionListener{
 			InputFieldEntity input = new InputFieldEntity(attribute.getText(),attributes.get(attribute).getText()); 
 			fields.add(input);
 		}				
-		InputEntity entity = new InputEntity("alumno" , "definicion-alumno.json", fields);
+		InputEntity entity = new InputEntity("alumno", "definicion-alumno.json", fields);
 		return entity;
 	}
 
