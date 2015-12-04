@@ -20,7 +20,7 @@ public class JsonInputTest {
         fields.add(new InputFieldEntity("identificador", "XS-3344"));
         fields.add(new InputFieldEntity("descripción", "Conector interno XS"));
         fields.add(new InputFieldEntity("precio", "756,03"));
-        InputEntity inputEntity = new InputEntity("EntityName", fields);
+        InputEntity inputEntity = new InputEntity("EntityName","producto.json", fields);
         Parser parser = new JsonParser(inputEntity);
         String actual = parser.parse();
         Assert.assertEquals(expected, actual);
@@ -28,11 +28,11 @@ public class JsonInputTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void parseShouldNotParserInputEntityWithoutFields() {
-        new InputEntity("EntityName", null);
+        new InputEntity("EntityName", "definicion.json",null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void parseShouldNotParserInputEntityWithoutEntityName() {
-        new InputEntity(null, new ArrayList<InputFieldEntity>());
+        new InputEntity(null, null ,new ArrayList<InputFieldEntity>());
     }
 }

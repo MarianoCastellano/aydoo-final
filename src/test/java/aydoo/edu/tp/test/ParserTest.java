@@ -18,7 +18,7 @@ public class ParserTest {
         fields.add(new InputFieldEntity("nombre", "Mariano"));
         fields.add(new InputFieldEntity("apellido", "Castellano"));
         fields.add(new InputFieldEntity("legajo", "26495"));
-        InputEntity inputEntity = new InputEntity("alumno", fields);
+        InputEntity inputEntity = new InputEntity("alumno","alumno.json", fields);
         Parser jsonParser = new JsonParser(inputEntity);
         String json = jsonParser.parse();
         String expected = "{\"nombre\":\"Mariano\",\"apellido\":\"Castellano\",\"legajo\":\"26495\"}";
@@ -31,7 +31,7 @@ public class ParserTest {
         List<InputFieldEntity> fields = new ArrayList<>();
         fields.add(new InputFieldEntity("nombre", "Mariano"));
         fields.add(new InputFieldEntity("apellido", ""));
-        InputEntity inputEntity = new InputEntity("alumno", fields);
+        InputEntity inputEntity = new InputEntity("alumno","alumno.json", fields);
         Parser jsonParser = new JsonParser(inputEntity);
         String json = jsonParser.parse();
         String expected = "{\"nombre\":\"Mariano\",\"apellido\":\"\"}";

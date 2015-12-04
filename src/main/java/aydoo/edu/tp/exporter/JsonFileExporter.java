@@ -8,8 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class JsonFileExporter implements FileExporter {
-
-    private static final String EXTENSION = ".json";
+    
     private InputEntity entity;
 
     public JsonFileExporter(InputEntity entity) {
@@ -18,7 +17,7 @@ public class JsonFileExporter implements FileExporter {
 
     @Override
     public void export() throws IOException {
-        File file = new File(filename().concat(EXTENSION));
+        File file = new File(filename());
         FileWriter fileWriter = new FileWriter(file);
         PrintWriter printWriter = new PrintWriter(fileWriter);
         printWriter.write(entity.toJson());
@@ -27,7 +26,7 @@ public class JsonFileExporter implements FileExporter {
     }
 
     private String filename() {
-        return this.entity.getEntityName();
+        return this.entity.getFileName();
     }
 
 

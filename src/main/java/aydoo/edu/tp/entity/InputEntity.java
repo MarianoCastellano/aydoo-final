@@ -6,11 +6,13 @@ public class InputEntity {
 
     private String entityName;
     private List<InputFieldEntity> fields;
+    private String outputFileName;
 
-    public InputEntity(String entityName, List<InputFieldEntity> fields) {
+    public InputEntity(String entityName, String outputFileName, List<InputFieldEntity> fields) {
         validateFields(entityName, fields);
         this.entityName = entityName;
         this.fields = fields;
+        this.outputFileName = outputFileName; 
     }
 
 
@@ -41,5 +43,10 @@ public class InputEntity {
     private void removeLastCommaAndLineSeparator(StringBuilder builder) {
         builder.deleteCharAt(builder.length() - 1);
     }
+
+
+	public String getFileName() {		
+		return outputFileName;
+	}
 
 }
