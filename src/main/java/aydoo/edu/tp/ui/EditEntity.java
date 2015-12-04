@@ -41,7 +41,7 @@ public class EditEntity implements ActionListener {
         
         
         box.add(addFieldAndValue("Nombre de entidad", entityName));        
-        box.add(addFieldAndValue("Archivo de definición", outputFileName));
+        box.add(addFieldAndValue("Archivo de definiciÃ³n", outputFileName));
 
         drawFields(content, box);
 
