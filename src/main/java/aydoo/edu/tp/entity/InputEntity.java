@@ -5,27 +5,17 @@ import java.util.List;
 public class InputEntity {
 
     private String entityName;
-    private String fileDefinition;
     private List<InputFieldEntity> fields;
 
-    public InputEntity(String entityName, String fileDefinition, List<InputFieldEntity> fields) {
-        validateFields(entityName, fileDefinition, fields);
+    public InputEntity(String entityName, List<InputFieldEntity> fields) {
+        validateFields(entityName, fields);
         this.entityName = entityName;
-        this.fileDefinition = fileDefinition;
         this.fields = fields;
     }
 
 
     public String getEntityName() {
         return entityName;
-    }
-
-    public String getFileDefinition() {
-        return fileDefinition;
-    }
-
-    public List<InputFieldEntity> getFields() {
-        return fields;
     }
 
     public String toJson() {
@@ -42,12 +32,10 @@ public class InputEntity {
     }
 
 
-    private void validateFields(String entityName, String fileDefinition, List<InputFieldEntity> fields) {
+    private void validateFields(String entityName, List<InputFieldEntity> fields) {
         FieldValidator.validateNull(entityName, "El nombre de la entidad es requerido.");
-        FieldValidator.validateNull(fileDefinition, "El nombre de la definicion de la entidad es requerida.");
         FieldValidator.validateNull(fields, "Los campos de la entidad son requeridos.");
         FieldValidator.validateEmpty(entityName, "El nombre de la entidad no puede ser vacio.");
-        FieldValidator.validateEmpty(fileDefinition, "El nombre de la definicion de la entidad no puede ser vacio.");
     }
 
     private void removeLastCommaAndLineSeparator(StringBuilder builder) {

@@ -20,12 +20,13 @@ import java.util.Map;
 
 public class EditEntity implements ActionListener {
 
+    private String outputFileName;
     private JButton buttonSave;
     private JFrame frame = new JFrame("Edit entity");
     private Map<JLabel, JTextField> attributes = new LinkedHashMap<>();
 
-    public EditEntity(String content) {
-
+    public EditEntity(String content, String fileDefinitionName) {
+        outputFileName = extractFileName(fileDefinitionName);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
@@ -38,6 +39,10 @@ public class EditEntity implements ActionListener {
 
         frame.setVisible(true);
         frame.setResizable(false);
+    }
+
+    private String extractFileName(String fileDefinitionName) {
+        return fileDefinitionName.substring(11, fileDefinitionName.length() - 5);
     }
 
     private void drawFields(String content, Box box) {
@@ -95,20 +100,19 @@ public class EditEntity implements ActionListener {
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent event) {
-        if (event.getSource() == buttonSave) {
-            save();
-        }
-    }
-
     private InputEntity getEntity() {
         List<InputFieldEntity> fields = new LinkedList<>();
         for (JLabel attribute : attributes.keySet()) {
             InputFieldEntity input = new InputFieldEntity(attribute.getText(), attributes.get(attribute).getText());
             fields.add(input);
         }
-        return new InputEntity("alumno", "definicion-alumno.json", fields);
+        return new InputEntity(outputFileName, fields);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        if (event.getSource() == buttonSave) {
+            save();
+        }
+    }
 }

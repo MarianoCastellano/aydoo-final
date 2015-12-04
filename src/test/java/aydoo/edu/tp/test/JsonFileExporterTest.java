@@ -17,7 +17,6 @@ import java.util.List;
 
 public class JsonFileExporterTest {
 
-    public static final String FILE_NAME_DEFINITION = "definicion-alumno.json";
     public static final String ENTITY_NAME = "alumno";
     private File file;
 
@@ -29,7 +28,7 @@ public class JsonFileExporterTest {
     @Test
     public void generateFileJsonTest() throws Exception {
         List<InputFieldEntity> fields = new ArrayList<>();
-        InputEntity entity = new InputEntity(ENTITY_NAME, FILE_NAME_DEFINITION, fields);
+        InputEntity entity = new InputEntity(ENTITY_NAME, fields);
         FileExporter jsonFileExporter = new JsonFileExporter(entity);
         jsonFileExporter.export();
         createFile();
@@ -48,7 +47,7 @@ public class JsonFileExporterTest {
         InputFieldEntity input2 = new InputFieldEntity("apellido", "roldan");
         fields.add(input1);
         fields.add(input2);
-        InputEntity entity = new InputEntity(ENTITY_NAME, FILE_NAME_DEFINITION, fields);
+        InputEntity entity = new InputEntity(ENTITY_NAME, fields);
         FileExporter jsonFileExporter = new JsonFileExporter(entity);
         jsonFileExporter.export();
         createFile();
