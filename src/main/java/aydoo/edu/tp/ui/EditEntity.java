@@ -68,7 +68,7 @@ public class EditEntity implements ActionListener {
     }
 
     private String extractFileName(String fileDefinitionName) {
-        return (fileDefinitionName.substring(11, fileDefinitionName.length() - 5));
+        return fileDefinitionName.substring(11, fileDefinitionName.length() - 5);
     }
 
     private void drawFields(String content, Box box) {
