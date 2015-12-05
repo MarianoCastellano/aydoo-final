@@ -80,6 +80,7 @@ public class EditEntity implements ActionListener {
             box.add(makeField(name));
         }
 
+        JPanel jPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonSave = new JButton("GUARDAR");
         buttonSave.addActionListener(this);
         buttonSave.addKeyListener(new KeyAdapter() {
@@ -89,8 +90,8 @@ public class EditEntity implements ActionListener {
                 }
             }
         });
-        buttonSave.setHorizontalAlignment(SwingConstants.CENTER);
-        box.add(buttonSave);
+        jPanel.add(buttonSave);
+        box.add(jPanel);
     }
 
     private JPanel makeField(String name) {
