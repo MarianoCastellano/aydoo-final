@@ -45,7 +45,7 @@ public class EditEntity implements ActionListener {
         frame.setSize(350, 50 * attributes.size());
 
         frame.setVisible(true);
-        frame.setResizable(false);
+        frame.setResizable(true);
     }
 
     private String capitalize(String line) {
