@@ -38,7 +38,7 @@ public class JsonFileExporterTest {
     }
 
     private void createFile() {
-        file = new File("alumno".concat(".json"));
+        file = new File(FILE_NAME);
     }
 
     @Test

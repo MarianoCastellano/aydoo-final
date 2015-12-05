@@ -1,6 +1,8 @@
 package aydoo.edu.tp.parser;
 
+import aydoo.edu.tp.entity.InputEntity;
+
 public interface Parser {
 
-	String parse();
+    InputEntity parse(String jsonContent);
 }

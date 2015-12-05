@@ -2,8 +2,15 @@ package aydoo.edu.tp.entity;
 
 public class InputFieldEntity {
 
+    public static final String EMPTY = "";
     private String name;
     private String value;
+
+    public InputFieldEntity(String name) {
+        validateFields(name, EMPTY);
+        this.name = name;
+        this.value = EMPTY;
+    }
 
     public InputFieldEntity(String name, String value) {
         validateFields(name, value);

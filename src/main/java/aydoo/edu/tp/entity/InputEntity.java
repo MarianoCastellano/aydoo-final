@@ -9,12 +9,11 @@ public class InputEntity {
     private String outputFileName;
 
     public InputEntity(String entityName, String outputFileName, List<InputFieldEntity> fields) {
-        validateFields(entityName, fields);
+        validateFields(entityName, outputFileName, fields);
         this.entityName = entityName;
         this.fields = fields;
-        this.outputFileName = outputFileName; 
+        this.outputFileName = outputFileName;
     }
-
 
     public String getEntityName() {
         return entityName;
@@ -34,10 +33,12 @@ public class InputEntity {
     }
 
 
-    private void validateFields(String entityName, List<InputFieldEntity> fields) {
+    private void validateFields(String entityName, String outputFileName, List<InputFieldEntity> fields) {
         FieldValidator.validateNull(entityName, "El nombre de la entidad es requerido.");
         FieldValidator.validateNull(fields, "Los campos de la entidad son requeridos.");
         FieldValidator.validateEmpty(entityName, "El nombre de la entidad no puede ser vacio.");
+        FieldValidator.validateNull(outputFileName, "El nombre del archivo es requerido.");
+        FieldValidator.validateEmpty(outputFileName, "El nombre del archivo no puede ser vacio.");
     }
 
     private void removeLastCommaAndLineSeparator(StringBuilder builder) {
@@ -45,8 +46,8 @@ public class InputEntity {
     }
 
 
-	public String getFileName() {		
-		return outputFileName;
-	}
+    public String getFileName() {
+        return outputFileName;
+    }
 
 }
