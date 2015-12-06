@@ -4,7 +4,6 @@ import aydoo.edu.tp.entity.InputEntity;
 import aydoo.edu.tp.entity.InputFieldEntity;
 import aydoo.edu.tp.exporter.FileExporter;
 import aydoo.edu.tp.exporter.JsonFileExporter;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -21,24 +20,16 @@ public class JsonFileExporterTest {
     public static final String FILE_NAME = "alumno.json";
     private File file;
 
-    @After
-    public void clean() {
-        file.deleteOnExit();
-    }
-
     @Test
     public void generateFileJsonTest() throws Exception {
         List<InputFieldEntity> fields = new ArrayList<>();
-        InputEntity entity = new InputEntity(ENTITY_NAME, FILE_NAME, fields);
-        FileExporter jsonFileExporter = new JsonFileExporter(entity);
+        InputEntity entity = new InputEntity(ENTITY_NAME, fields);
+        FileExporter jsonFileExporter = new JsonFileExporter(entity, FILE_NAME);
         jsonFileExporter.export();
         createFile();
 
         Assert.assertTrue(file.exists());
-    }
-
-    private void createFile() {
-        file = new File(FILE_NAME);
+        file.deleteOnExit();
     }
 
     @Test
@@ -48,8 +39,8 @@ public class JsonFileExporterTest {
         InputFieldEntity input2 = new InputFieldEntity("apellido", "roldan");
         fields.add(input1);
         fields.add(input2);
-        InputEntity entity = new InputEntity(ENTITY_NAME, FILE_NAME, fields);
-        FileExporter jsonFileExporter = new JsonFileExporter(entity);
+        InputEntity entity = new InputEntity(ENTITY_NAME, fields);
+        FileExporter jsonFileExporter = new JsonFileExporter(entity, FILE_NAME);
         jsonFileExporter.export();
         createFile();
 
@@ -57,6 +48,22 @@ public class JsonFileExporterTest {
         String expected = "{\"nombre\":\"sebastian\",\"apellido\":\"roldan\"}";
 
         Assert.assertEquals(expected, actual);
+        file.deleteOnExit();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void createJsonFileExporterWithoutOutputFileNameShouldThrowException() {
+        List<InputFieldEntity> fields = new ArrayList<>();
+        InputFieldEntity input1 = new InputFieldEntity("nombre", "sebastian");
+        InputFieldEntity input2 = new InputFieldEntity("apellido", "roldan");
+        fields.add(input1);
+        fields.add(input2);
+        InputEntity entity = new InputEntity(ENTITY_NAME, fields);
+        new JsonFileExporter(entity, null);
+    }
+
+    private void createFile() {
+        file = new File(FILE_NAME);
     }
 
     private String getContentToFile() throws IOException {

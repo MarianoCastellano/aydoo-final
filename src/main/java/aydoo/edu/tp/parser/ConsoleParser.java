@@ -13,11 +13,9 @@ public class ConsoleParser implements Parser {
     public static final String CAMPOS = "campos";
     public static final String NOMBRE = "nombre";
     private final String entityName;
-    private final String outputFileName;
 
-    public ConsoleParser(String entityName, String outputFileName) {
+    public ConsoleParser(String entityName) {
         this.entityName = entityName;
-        this.outputFileName = outputFileName;
     }
 
     @Override
@@ -34,6 +32,6 @@ public class ConsoleParser implements Parser {
             fields.add(inputFieldEntity);
         }
 
-        return new InputEntity(entityName, outputFileName, fields);
+        return new InputEntity(entityName, fields);
     }
 }

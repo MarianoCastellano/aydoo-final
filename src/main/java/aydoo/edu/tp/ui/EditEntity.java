@@ -111,7 +111,7 @@ public class EditEntity implements ActionListener {
     }
 
     private void save() {
-        FileExporter generator = new JsonFileExporter(this.getEntity());
+        FileExporter generator = new JsonFileExporter(this.getEntity(), outputFileName);
         String absolutePath = "";
         try {
             absolutePath = generator.export();
@@ -137,7 +137,7 @@ public class EditEntity implements ActionListener {
             InputFieldEntity input = new InputFieldEntity(attribute.getText(), attributes.get(attribute).getText());
             fields.add(input);
         }
-        return new InputEntity(entityName, outputFileName, fields);
+        return new InputEntity(entityName, fields);
     }
 
     @Override

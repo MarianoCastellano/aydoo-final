@@ -22,10 +22,10 @@ public class JSONGen {
         File file = new File(filePath);
         String content = FileUtil.readFile(file.getPath(), Charset.defaultCharset());
 
-        Parser parser = new ConsoleParser(entityName, outputFileName);
+        Parser parser = new ConsoleParser(entityName);
         InputEntity inputEntity = parser.parse(content);
 
-        FileExporter fileExporter = new JsonFileExporter(inputEntity);
+        FileExporter fileExporter = new JsonFileExporter(inputEntity, outputFileName);
         String absolutePath = fileExporter.export();
 
         String message = "[INFO - AyDOO - JSON PATH] Archivo generado en : " + absolutePath;
