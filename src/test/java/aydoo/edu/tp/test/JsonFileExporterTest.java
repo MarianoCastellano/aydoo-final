@@ -62,6 +62,11 @@ public class JsonFileExporterTest {
         new JsonFileExporter(entity, null);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void createJsonFileExporterWithoutInputEntityShouldThrowException() {
+        new JsonFileExporter(null, "alumno.json");
+    }
+
     private void createFile() {
         file = new File(FILE_NAME);
     }
