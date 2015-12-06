@@ -26,6 +26,9 @@ public class JSONGen {
         InputEntity inputEntity = parser.parse(content);
 
         FileExporter fileExporter = new JsonFileExporter(inputEntity);
-        fileExporter.export();
+        String absolutePath = fileExporter.export();
+
+        String message = "[INFO - AyDOO - JSON PATH] Archivo generado en : " + absolutePath;
+        System.console().writer().println(message);
     }
 }
