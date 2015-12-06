@@ -9,10 +9,7 @@ import org.json.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -115,14 +112,23 @@ public class EditEntity implements ActionListener {
 
     private void save() {
         FileExporter generator = new JsonFileExporter(this.getEntity());
+        String absolutePath = "";
         try {
-            generator.export();
+            absolutePath = generator.export();
             frame.setVisible(false);
             frame.dispose();
         } catch (IOException error) {
             error.printStackTrace();
         }
+        createMessageDialog(absolutePath);
+    }
 
+    private void createMessageDialog(String absolutePath) {
+        String message = "Archivo generado en : " + absolutePath;
+        JTextArea area = new JTextArea(message);
+        area.setEditable(true);
+        JOptionPane.showMessageDialog(frame, area);
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }
 
     private InputEntity getEntity() {

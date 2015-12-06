@@ -12,6 +12,7 @@ import java.nio.charset.Charset;
 public class FileChooser extends JPanel implements ActionListener {
 
     private static final long serialVersionUID = 1L;
+    private static JFrame frame;
     private JButton openButton;
     private JFileChooser fileChooser;
     private JPanel panel;
@@ -32,7 +33,7 @@ public class FileChooser extends JPanel implements ActionListener {
         JFrame.setDefaultLookAndFeelDecorated(true);
         JDialog.setDefaultLookAndFeelDecorated(true);
 
-        JFrame frame = new JFrame("AyDOO Final");
+        frame = new JFrame("AyDOO Final");
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JComponent newContentPane = new FileChooser();

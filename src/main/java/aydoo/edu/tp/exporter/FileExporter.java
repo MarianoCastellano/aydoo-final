@@ -4,5 +4,5 @@ import java.io.IOException;
 
 public interface FileExporter {
 
-    void export() throws IOException;
+    String export() throws IOException;
 }
