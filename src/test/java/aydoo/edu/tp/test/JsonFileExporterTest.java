@@ -67,6 +67,17 @@ public class JsonFileExporterTest {
         new JsonFileExporter(null, "alumno.json");
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void createJsonFileExporterWithEmptyOutputFileNameShouldThrowException() {
+        List<InputFieldEntity> fields = new ArrayList<>();
+        InputFieldEntity input1 = new InputFieldEntity("nombre", "sebastian");
+        InputFieldEntity input2 = new InputFieldEntity("apellido", "roldan");
+        fields.add(input1);
+        fields.add(input2);
+        InputEntity entity = new InputEntity(ENTITY_NAME, fields);
+        new JsonFileExporter(entity, "");
+    }
+
     private void createFile() {
         file = new File(FILE_NAME);
     }
